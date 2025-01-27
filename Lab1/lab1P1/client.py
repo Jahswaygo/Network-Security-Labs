@@ -4,7 +4,7 @@ from cipher import vigenere_encrypt, vigenere_decrypt
 def main():
     key = "TMU"  # Vigenère cipher key
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Create a TCP/IP socket
-    client.connect(("127.0.0.1", 65432))  # Connect to the server at localhost on port 9999
+    client.connect(("127.0.0.1", 65432))  # Connect to the server at localhost on port 65432
 
     while True:
         # Prompt the user to enter a question

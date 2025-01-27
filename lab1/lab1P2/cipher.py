@@ -43,35 +43,3 @@ def vigenere_decrypt(ciphertext, key):
     
     # Join the list of decrypted characters into a single string and return it
     return ''.join(decrypted)
-
-def encode_text(text, key):
-    return vigenere_encrypt(text, key)
-
-def decode_text(text, key):
-    return vigenere_decrypt(text, key)
-
-def process_client_request(client_socket, client_address, responses, key):
-    """Handle the client's request and send a response."""
-    print(f"Connection from {client_address} has been established.")
-    try:
-        while True:
-            # Receive and decrypt the client's message
-            encrypted_request = client_socket.recv(1024).decode()
-            if not encrypted_request:
-                break
-            decrypted_request = decode_text(encrypted_request, key)
-            print(f"Received encrypted request: {encrypted_request}")
-            print(f"Client's message: {decrypted_request}")
-
-            # Prepare and send the response
-            response = responses.get(decrypted_request, "I DON'T UNDERSTAND THAT.")
-            encrypted_response = encode_text(response, key)
-            client_socket.sendall(encrypted_response.encode())
-            print(f"Sent encrypted response: {encrypted_response}")
-
-    except ConnectionError as conn_err:
-        print(f"Connection error: {conn_err}")
-
-    finally:
-        client_socket.close()
-        print(f"Connection from {client_address} has been closed.")
