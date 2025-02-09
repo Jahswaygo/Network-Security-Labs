@@ -27,8 +27,6 @@ def decrypt_symmetric(key, ciphertext):
     decrypted_text = decryptor.update(ciphertext) + decryptor.finalize()
     return decrypted_text.strip().decode()  # Remove padding and decode
 
-
-
 # Authentication Protocol (Symmetric)
 def symmetric_auth_protocol():
     key = generate_symmetric_key()  # Generate a symmetric key
@@ -36,20 +34,29 @@ def symmetric_auth_protocol():
     nonce_b = os.urandom(8)  # Generate a random nonce for Bob
     
     # Step 1: Alice → Bob
-    print("Alice sends identity & nonce to Bob")
-    encrypted_msg_1 = encrypt_symmetric(key, f"Alice|{nonce_a.hex()}")
+    # Alice encrypts a message containing her identity and a nonce, then sends it to Bob
+    encrypted_msg_1 = encrypt_symmetric(key, f"Alice to Bob | {nonce_a.hex()}")
+    print(f"the sent message 1: {encrypted_msg_1}")
     
     # Step 2: Bob → Alice
-    print("Bob responds with nonce & encrypted identity")
-    encrypted_msg_2 = encrypt_symmetric(key, f"Bob|{nonce_a.hex()}|{nonce_b.hex()}")
-    decrypted_msg_2 = decrypt_symmetric(key, encrypted_msg_2)  # Bob decrypts Alice's message
-    
+    # Bob decrypts Alice's message, verifies the nonce, and encrypts a message containing his identity, Alice's nonce, and a new nonce, then sends it to Alice
+    decrypted_msg_1 = decrypt_symmetric(key, encrypted_msg_1)  # Bob decrypts Alice's message
+    print(f"the decrypted message 1: {decrypted_msg_1}")
+    encrypted_msg_2 = encrypt_symmetric(key, f"Bob to Alice | {nonce_b.hex()} | {nonce_a.hex()}")  # Bob encrypts a message containing his identity, and Alice's nonce
+    print(f"the sent message 2: {encrypted_msg_2}")
+
     # Step 3: Alice → Bob
-    encrypted_msg_3 = encrypt_symmetric(key, f"Alice|{nonce_b.hex()}")
-    decrypted_msg_3 = decrypt_symmetric(key, encrypted_msg_3)  # Alice decrypts Bob's message
+    # Alice decrypts Bob's message, verifies the nonces, and encrypts a message containing her identity and Bob's nonce, then sends it to Bob
+    decrypted_msg_2 = decrypt_symmetric(key, encrypted_msg_2)  #Alice decrypts Bob's message
+    print(f"the decrypted message 2: {decrypted_msg_2}")
+    
+    encrypted_msg_3 = encrypt_symmetric(key, f"Alice back to Bob | {nonce_a.hex()} | {nonce_b.hex()}")  # Alice encrypts a message containing her identity and Bob's nonce
+    print(f"the sent message 3: {encrypted_msg_3}")
+    
+    decrypted_msg_3 = decrypt_symmetric(key, encrypted_msg_3)  # Bob decrypts Alice's message
+    print(f"the decrypted message 3: {decrypted_msg_3}")
     
     print("Authentication Successful!")
-
 
 # Run Protocols
 symmetric_auth_protocol()
