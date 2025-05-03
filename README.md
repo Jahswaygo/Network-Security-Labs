@@ -86,16 +86,3 @@ This lab extends the concepts of secure communication to a group setting. It inv
 - Explores the use of digital signatures for message integrity.
 - Implements message forwarding and logging to ensure secure communication.
 
----
-
-## How to Run
-
-### Prerequisites
-- Python 3.10 or higher
-- Required libraries: `rsa`, `cryptography`
-
-### Steps
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/your-repo/COE817Labs.git
-   cd COE817Labs
