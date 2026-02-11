@@ -74,15 +74,16 @@ This lab demonstrates the classical Vigenère cipher for encrypting and decrypti
 
 ### Directory Structure
 ```
-Lab1/
-├── lab1P1/          # Single-threaded implementation
-│   ├── cipher.py    # Vigenère cipher encryption/decryption
-│   ├── client.py    # Client application
-│   └── server.py    # Single-threaded server
-└── lab1/
-    └── lab1P2/      # Multi-threaded implementation
-        ├── cipher.py
-        └── server.py
+Lab1/                # Contains single-threaded implementation
+└── lab1P1/
+    ├── cipher.py    # Vigenère cipher encryption/decryption
+    ├── client.py    # Client application
+    └── server.py    # Single-threaded server
+
+lab1/                # Contains multi-threaded implementation
+└── lab1P2/
+    ├── cipher.py    # Vigenère cipher encryption/decryption
+    └── server.py    # Multi-threaded server
 ```
 
 ### Components
